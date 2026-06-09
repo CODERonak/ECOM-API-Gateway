@@ -3,4 +3,31 @@ server:
 
 spring:
   application:
-    name: api-gateway
+    name: ecom-api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        # Route's anything starting with /auth → Auth Service
+        - id: user-service
+          uri: ${ECOM_USER_SERVICE_URL}
+          predicates:
+            - Path=api/auth/** 
+
+        # Route's anything starting with api/prodcuts → Product Service
+        - id: product-service
+          uri: ${ECOM_PRODUCT_SERVICE_URL}
+          predicates:
+            - Path=api/products/**  
+
+        # Route's anything starting with api/orders → Order Service
+        - id: order-service
+          uri: ${ECOM_ORDER_SERVICE_URL}
+          predicates:
+            - Path=api/orders/**  
+
+        # Route's anything starting with api/notifications → Notifictaion Service
+        - id: notification-service
+          uri: ${ECOM_NOTIFICATION_SERVICE_URL}
+          predicates:
+            - Path=api/notifications/**  
